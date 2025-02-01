@@ -17,14 +17,20 @@ import javax.inject.Inject
 
 
 /**
- * Created by Abhinay on 29/01/25.
+ * [NotesViewModel] is a ViewModel responsible for managing the state and business logic
+ * related to the list of notes. It handles user interactions, data fetching, and
+ * updates the UI state accordingly.
  *
+ * This ViewModel uses Hilt for dependency injection and leverages Kotlin Coroutines
+ * for asynchronous operations.
  *
+ * @property noteUseCases The use cases related to notes, providing access to
+ *                         operations like getting, deleting, and adding notes.
  */
 @HiltViewModel
 class NotesViewModel @Inject constructor(
     private val noteUseCases: NoteUseCases
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = mutableStateOf(NotesState())
     val state: State<NotesState> = _state
@@ -39,12 +45,12 @@ class NotesViewModel @Inject constructor(
 
     fun onEvent(event: NotesEvent) {
 
-        when(event) {
+        when (event) {
             is NotesEvent.Order -> {
 
-                if(state.value.noteOrder::class.java == event.noteOrder::class.java &&
+                if (state.value.noteOrder::class.java == event.noteOrder::class.java &&
                     state.value.noteOrder.orderType == event.noteOrder.orderType
-                    ) {
+                ) {
                     return
                 }
                 getNotes(event.noteOrder)

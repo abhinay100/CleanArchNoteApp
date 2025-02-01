@@ -16,6 +16,13 @@ import com.abhinay.cleanarchitecturenoteapp.feature_note.presentation.util.Scree
 import com.abhinay.cleanarchitecturenoteapp.ui.theme.CleanArchitectureNoteAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * The main activity of the application.
+ *
+ * This activity serves as the entry point for the application and is responsible for setting up the
+ * navigation graph and displaying the appropriate screens. It uses Jetpack Compose for UI and
+ * Hilt for dependency injection.
+ */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,47 +30,47 @@ class MainActivity : ComponentActivity() {
         setContent {
             CleanArchitectureNoteAppTheme {
 
-               Surface(
-                   color = MaterialTheme.colors.background
-               ) {
-                   val navController = rememberNavController()
-                   NavHost(
-                       navController = navController,
-                       startDestination = Screen.NotesScreen.route
-                   ) {
-                       composable(route = Screen.NotesScreen.route) {
-                           NotesScreen(navController = navController)
-                       }
+                Surface(
+                    color = MaterialTheme.colors.background
+                ) {
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.NotesScreen.route
+                    ) {
+                        composable(route = Screen.NotesScreen.route) {
+                            NotesScreen(navController = navController)
+                        }
 
-                       composable(
-                           route = Screen.AddEditNoteScreen.route +
-                                   "?noteId={noteId}&noteColor={noteColor}",
-                           arguments = listOf(
-                               navArgument(
-                                   name = "noteId"
-                               ) {
-                                   type = NavType.IntType
-                                   defaultValue = -1
-                               },
-                               navArgument(
-                                   name = "noteColor"
-                               ) {
-                                   type = NavType.IntType
-                                   defaultValue = -1
-                               },
-                           )
-                       ){
-                           val color = it.arguments?.getInt("noteColor") ?: -1
-                           AddEditNoteScreen(
-                               navController = navController,
-                               noteColor = color
-                           )
+                        composable(
+                            route = Screen.AddEditNoteScreen.route +
+                                    "?noteId={noteId}&noteColor={noteColor}",
+                            arguments = listOf(
+                                navArgument(
+                                    name = "noteId"
+                                ) {
+                                    type = NavType.IntType
+                                    defaultValue = -1
+                                },
+                                navArgument(
+                                    name = "noteColor"
+                                ) {
+                                    type = NavType.IntType
+                                    defaultValue = -1
+                                },
+                            )
+                        ) {
+                            val color = it.arguments?.getInt("noteColor") ?: -1
+                            AddEditNoteScreen(
+                                navController = navController,
+                                noteColor = color
+                            )
 
-                       }
+                        }
 
-                   }
-               }
-                
+                    }
+                }
+
             }
         }
     }

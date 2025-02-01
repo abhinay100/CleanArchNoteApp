@@ -10,9 +10,14 @@ import kotlinx.coroutines.flow.map
 
 
 /**
- * Created by Abhinay on 28/01/25.
+ * `GetNotes` is a use case class responsible for retrieving a list of `Note` objects
+ * from the underlying `NoteRepository` and applying sorting based on the provided `NoteOrder`.
  *
+ * This class acts as an intermediary between the data layer (repository) and the
+ * presentation layer (e.g., ViewModel). It encapsulates the logic of retrieving and
+ * sorting notes, providing a clean and testable interface for the UI to use.
  *
+ * @property repository The `NoteRepository` instance used to fetch the notes.
  */
 class GetNotes(
     private val repository: NoteRepository
@@ -23,17 +28,18 @@ class GetNotes(
     ): Flow<List<Note>> {
 
         return repository.getNotes().map { notes ->
-            when(noteOrder.orderType) {
+            when (noteOrder.orderType) {
                 is OrderType.Ascending -> {
-                    when(noteOrder) {
+                    when (noteOrder) {
                         is NoteOrder.Title -> notes.sortedBy { it.title.lowercase() }
                         is NoteOrder.Date -> notes.sortedBy { it.timestamp }
                         is NoteOrder.Color -> notes.sortedBy { it.color }
                     }
 
                 }
+
                 is OrderType.Descending -> {
-                    when(noteOrder) {
+                    when (noteOrder) {
                         is NoteOrder.Title -> notes.sortedByDescending { it.title.lowercase() }
                         is NoteOrder.Date -> notes.sortedByDescending { it.timestamp }
                         is NoteOrder.Color -> notes.sortedByDescending { it.color }

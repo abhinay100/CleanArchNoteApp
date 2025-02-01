@@ -14,20 +14,28 @@ import androidx.compose.ui.unit.dp
 
 
 /**
- * Created by Abhinay on 29/01/25.
+ * A styled RadioButton with accompanying text.
  *
+ * This composable provides a RadioButton with a label, ensuring consistent styling
+ * and behavior within the application. It handles the visual state of the RadioButton
+ * based on the `selected` parameter and invokes the `onSelect` callback when clicked.
  *
+ * @param text The text label to display alongside the RadioButton.
+ * @param selected Whether the RadioButton is currently selected.
+ * @param onSelect Callback invoked when the RadioButton is clicked.
+ *                 This function should handle updating the selection state.
+ * @param modifier Modifier to be applied to the container Row.
  */
 @Composable
 fun DefaultRadioButton(
-   text: String,
-   selected: Boolean,
-   onSelect: () -> Unit,
-   modifier: Modifier = Modifier
+    text: String,
+    selected: Boolean,
+    onSelect: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     Row(
-        modifier = Modifier,
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
 

@@ -45,10 +45,17 @@ import kotlinx.coroutines.launch
 
 
 /**
- * Created by Abhinay on 29/01/25.
+ * Displays the main screen for managing notes.
  *
+ * This screen allows users to view, sort, delete, and add new notes.
+ * It utilizes a [Scaffold] for the basic layout and includes:
+ * - A floating action button to add new notes.
+ * - A sort button to toggle the ordering options.
+ * - An animated section to display the ordering options ([OrderSection]).
+ * - A list of notes ([LazyColumn] with [NoteItem]s).
+ * - Snackbar to inform the user about note deletion with an undo option.
  *
- */
+ * @param navController The navigation controller used for */
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun NotesScreen(
@@ -132,7 +139,7 @@ fun NotesScreen(
                             .clickable {
                                 navController.navigate(
                                     Screen.AddEditNoteScreen.route +
-                                    "?noteId=${note.id}&noteColor=${note.color}"
+                                            "?noteId=${note.id}&noteColor=${note.color}"
                                 )
 
 

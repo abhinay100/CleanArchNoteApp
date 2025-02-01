@@ -15,19 +15,40 @@ import com.abhinay.cleanarchitecturenoteapp.feature_note.domain.util.OrderType
 
 
 /**
+ * A composable function that displays a section for ordering notes.
+ *
+ * This function provides radio buttons to select the ordering criteria (Title, Date, Color)
+ * and the order type (Ascending, Descending). It allows the user to change the note order
+ * and notifies the parent composable via a callback.
+ *
+ * @param modifier The modifier to be applied to the layout.
+ * @param noteOrder The current [NoteOrder] applied to the notes. Defaults to [NoteOrder.Date] with [OrderType.Descending].
+ * @param onOrderChange A callback function that is invoked when the user changes the note order.
+ *                      It receives the new [NoteOrder] as a parameter.
+ *
+ * Example Usage:
+ * ```
+ * OrderSection(
+ *     noteOrder = myCurrentNoteOrder,
+ *     onOrderChange = { newOrder ->
+ *         // Update the note list with the new order
+ *         myCurrentNoteOrder = newOrder
+ *         // ... refresh the list of notes
+ *     }
+ * )
+ * ```
+ *
  * Created by Abhinay on 29/01/25.
- *
- *
  */
 @Composable
 fun OrderSection(
     modifier: Modifier = Modifier,
     noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending),
     onOrderChange: (NoteOrder) -> Unit
- ) {
+) {
 
     Column(
-        modifier = Modifier
+        modifier = modifier
     ) {
 
         Row(

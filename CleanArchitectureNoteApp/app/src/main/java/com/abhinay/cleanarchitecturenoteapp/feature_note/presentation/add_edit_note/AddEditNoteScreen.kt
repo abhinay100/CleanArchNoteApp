@@ -44,10 +44,14 @@ import kotlinx.coroutines.launch
 
 
 /**
- * Created by Abhinay on 31/01/25.
+ * A screen for adding or editing a note.
  *
+ * This composable provides a user interface for creating new notes or modifying existing ones.
+ * It allows the user to input a title and content for the note, select a background color,
+ * and save the note.  It also handles displaying feedback to the user in the form of snackbars.
  *
- */
+ * @param navController The navigation controller used for navigating between screens.
+ * @param noteColor The initial color of the note. Use -1 */
 @Composable
 fun AddEditNoteScreen(
 
@@ -55,7 +59,7 @@ fun AddEditNoteScreen(
     noteColor: Int,
     viewModel: AddEditNoteViewModel = hiltViewModel()
 
-    ) {
+) {
 
     val titleState = viewModel.noteTitle.value
     val contentState = viewModel.noteContent.value
@@ -63,23 +67,25 @@ fun AddEditNoteScreen(
     val scaffoldState = rememberScaffoldState()
     val noteBackgroundAnimatable = remember {
         Animatable(
-            Color(if(noteColor != -1) noteColor else viewModel.noteColor.value)
+            Color(if (noteColor != -1) noteColor else viewModel.noteColor.value)
 
         )
     }
     val scope = rememberCoroutineScope()
 
-    LaunchedEffect( key1= true
+    LaunchedEffect(
+        key1 = true
 
     ) {
 
         viewModel.eventFlow.collectLatest { event ->
-            when(event) {
+            when (event) {
                 is AddEditNoteViewModel.UiEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = event.message
                     )
                 }
+
                 is AddEditNoteViewModel.UiEvent.SaveNote -> {
                     navController.navigateUp()
                 }
@@ -93,9 +99,10 @@ fun AddEditNoteScreen(
 
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick ={
-                viewModel.onEvent(AddEditNoteEvent.SaveNote)
-            }, backgroundColor = MaterialTheme.colors.primary
+            FloatingActionButton(
+                onClick = {
+                    viewModel.onEvent(AddEditNoteEvent.SaveNote)
+                }, backgroundColor = MaterialTheme.colors.primary
             ) {
 
                 Icon(imageVector = Icons.Default.Save, contentDescription = "Save note")
@@ -144,9 +151,7 @@ fun AddEditNoteScreen(
                                 viewModel.onEvent(AddEditNoteEvent.ChangeColor(colorInt))
 
                             }
-                    ) {
-
-                    }
+                    )
 
                 }
 

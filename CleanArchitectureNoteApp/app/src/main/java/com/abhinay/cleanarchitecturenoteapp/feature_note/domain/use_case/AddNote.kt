@@ -7,9 +7,13 @@ import kotlin.jvm.Throws
 
 
 /**
- * Created by Abhinay on 29/01/25.
+ * Represents a use case for adding a new note.
  *
+ * This class handles the logic for inserting a new note into the repository,
+ * including validation of the note's title and content.
  *
+ * @property repository The [NoteRepository] used to persist the note.
+ * @constructor Creates an AddNote instance with the specified [NoteRepository].
  */
 class AddNote(
 
@@ -20,11 +24,11 @@ class AddNote(
     @Throws(InvalidNoteException::class)
     suspend operator fun invoke(note: Note) {
 
-        if(note.title.isBlank()) {
+        if (note.title.isBlank()) {
             throw InvalidNoteException("The title of the note can't be empty.")
 
         }
-        if(note.content.isBlank()) {
+        if (note.content.isBlank()) {
             throw InvalidNoteException("The content of the note can't be empty.")
 
         }

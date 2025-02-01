@@ -7,9 +7,14 @@ import kotlinx.coroutines.flow.Flow
 
 
 /**
- * Created by Abhinay on 28/01/25.
+ * Implementation of the [NoteRepository] interface.
  *
+ * This class provides concrete implementations for interacting with note data
+ * stored in a persistent data source using the provided [NoteDao].
+ * It acts as an intermediary between the data source and the application's
+ * higher-level components (e.g., Use Cases or ViewModels).
  *
+ * @property dao The [NoteDao] used to access and manipulate note data.
  */
 class NoteRepositoryImpl(
     private val dao: NoteDao

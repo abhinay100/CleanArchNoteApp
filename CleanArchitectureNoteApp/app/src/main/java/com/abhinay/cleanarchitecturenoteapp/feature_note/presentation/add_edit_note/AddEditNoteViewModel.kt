@@ -17,9 +17,15 @@ import javax.inject.Inject
 
 
 /**
- * Created by Abhinay on 30/01/25.
+ * ViewModel responsible for handling the UI logic and data for the Add/Edit Note screen.
  *
+ * This ViewModel manages the state of the note being created or edited, including the title, content, color,
+ * and handles user interactions such as entering text, changing focus, changing the color, and saving the note.
+ * It communicates with the [NoteUseCases] to perform data operations and exposes a flow of [UiEvent] to notify the
+ * UI about changes or events.
  *
+ * @property noteUseCases An instance of [NoteUseCases] to handle note-related business logic.
+ * @property savedStateHandle A handle to access and manage the saved state of the ViewModel.
  */
 @HiltViewModel
 class AddEditNoteViewModel @Inject constructor(
@@ -51,8 +57,8 @@ class AddEditNoteViewModel @Inject constructor(
 
     init {
 
-        savedStateHandle.get<Int>("note_id")?.let { noteId ->
-            if(noteId != -1) {
+        savedStateHandle.get<Int>("noteId")?.let { noteId ->
+            if (noteId != -1) {
                 viewModelScope.launch {
                     noteUseCases.getNote(noteId)?.also { note ->
                         currentNoteId = note.id

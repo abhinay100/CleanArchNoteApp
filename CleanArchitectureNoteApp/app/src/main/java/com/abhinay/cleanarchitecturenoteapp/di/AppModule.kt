@@ -18,9 +18,14 @@ import javax.inject.Singleton
 
 
 /**
+ * AppModule: A Dagger Hilt module responsible for providing application-wide dependencies.
+ *
+ * This module is installed in the SingletonComponent scope, meaning its provided
+ * dependencies will have a single instance throughout the application's lifecycle.
+ * It provides dependencies related to the note-taking feature, including the
+ * Room database, the repository, and the use cases.
+ *
  * Created by Abhinay on 28/01/25.
- *
- *
  */
 @Module
 @InstallIn(SingletonComponent::class)
